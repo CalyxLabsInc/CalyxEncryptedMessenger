@@ -1,14 +1,14 @@
-# Calyx Encrypted Messenger (`Calyx QPEMessenger`)
+# Calyx Encrypted Messenger (`Calyx QPEP Messenger`)
 
-[](https://github.com/CalyxLabsInc/OpenQPEP/)
-[](https://calyxlabsinc.github.io/)
-[](https://messenger.calyxlabsinc.org)
-[](https://github.com/CalyxLabsInc/OpenQPEP/)
-[License](https://www.google.com/search?q=https://calyxlabsinc.org/LICENSE.txt)
+[![OpenQPEP Ecosystem](https://img.shields.io/badge/OpenQPEP%20Ecosystem-Beta%20Version%200.1.6-00E5FF)](https://github.com/CalyxLabsInc/OpenQPEP/)
+[![Android Package](https://img.shields.io/badge/Android-com.calyxlabs.qpem-2563EB)](https://calyxlabsinc.github.io/)
+[![Web Client](https://img.shields.io/badge/Web%20Messenger-messenger.calyxlabsinc.org-00E5FF)](https://messenger.calyxlabsinc.org)
+[![Key Ring Format](https://img.shields.io/badge/Account%20Identity-.qpkrf%20%7C%2064--Char%20Key%20Hash-10B981)](https://github.com/CalyxLabsInc/OpenQPEP/)
+[![License](https://img.shields.io/badge/License-Calyx%20Public%20Open%20Source%20License%201.0-00E5FF)](https://calyxlabsinc.org/LICENSE.txt)
 
-**Calyx Encrypted Messenger** (nicknamed **Calyx QPEMessenger**, Android package `com.calyxlabs.qpem`) is the official post-quantum end-to-end encrypted messaging application of the **[OpenQPEP](https://github.com/CalyxLabsInc/OpenQPEP/)** (**Open Quantum-Proof Encryption Protocol** / **Calyx QPEP**) ecosystem, created and engineered by **Tristen Martinez** at **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)**
+**Calyx Encrypted Messenger** (nicknamed **Calyx QPEP Messenger**, Android package `com.calyxlabs.qpem`) is the official post-quantum end-to-end encrypted messaging application of the **[OpenQPEP](https://github.com/CalyxLabsInc/OpenQPEP/)** (**Open Quantum-Proof Encryption Protocol** / **Calyx QPEP**) ecosystem, created and engineered by **Tristen Martinez** at **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)**
 
-Built in the signature **Neon Blue & Obsidian Black** colorway of the **[Calyx QPEP Client](https://www.google.com/search?q=https://github.com/CalyxLabsInc/CalyxQPEP-Client)** ecosystem, **Calyx Encrypted Messenger** replaces phone-number-based accounts and classical PGP/Signal key agreements with self-certified **Quantum Proof Key Ring Files (`.qpkrf`)** where **your QPEP Key Ring is your user account**. Users can access their accounts both through the native Android application (`com.calyxlabs.qpem`) and directly in the browser at **[messenger.calyxlabsinc.org](https://messenger.calyxlabsinc.org)**.
+Built in the signature **Neon Blue & Obsidian Black** colorway of the **[Calyx QPEP Client](https://github.com/CalyxLabsInc/CalyxQPEP-Client)** ecosystem, **Calyx Encrypted Messenger** replaces phone-number-based accounts and classical PGP/Signal key agreements with self-certified **Quantum Proof Key Ring Files (`.qpkrf`)** where **your QPEP Key Ring is your user account**. Users can access their accounts both through the native Android application (`com.calyxlabs.qpem`) and directly in the browser at **[messenger.calyxlabsinc.org](https://messenger.calyxlabsinc.org)**.
 
 ## 1. Core Design Philosophy: QPEP Keys Are User Accounts
 
@@ -21,7 +21,7 @@ Unlike conventional messengers that tie your identity to a SIM card, phone numbe
    - Every QPEP Key Ring produces a cryptographically unique **64-character Key Hash** bound to the owner's UID and public lattice/curve vectors via `qSponge-512`.
    - Users search and message peers directly by their **64-character Key Hash** (or `@KeyName`) with continuous real-time inbox and directory synchronization across **[messenger.calyxlabsinc.org](https://messenger.calyxlabsinc.org)**.
 3. **Full Public & Private `.qpkrf` Key Export & Portability**:
-   - Logged-in users can export their **Public Key Ring (`-----BEGIN CALYX QPKRF PUBLIC KEY RING-----`)** to share out-of-band or import into **[Calyx QPEP Client](https://www.google.com/search?q=https://github.com/CalyxLabsInc/CalyxQPEP-Client)**.
+   - Logged-in users can export their **Public Key Ring (`-----BEGIN CALYX QPKRF PUBLIC KEY RING-----`)** to share out-of-band or import into **[Calyx QPEP Client](https://github.com/CalyxLabsInc/CalyxQPEP-Client)**.
    - Users can also export their **Private Key Ring (`-----BEGIN CALYX QPKRF PRIVATE KEY RING-----`)** after passing the mandatory **`QPKD-Argon`** passphrase verification gate, allowing seamless account migration between Android devices and the **[messenger.calyxlabsinc.org](https://messenger.calyxlabsinc.org)** web client.
 
 ## 2. How End-to-End Encryption Works in Calyx QPEP Messenger
@@ -68,29 +68,44 @@ When creating an account in **Calyx Encrypted Messenger**, users can select from
 
 ## 5. Repository Structure & Ecosystem Components
 
-* **`Android Files` (`com.calyxlabs.qpem`)**:
+* **`Android Files/` (`com.calyxlabs.qpem`)**:
   - `CalyxEncryptedMessenger.apk` — Direct-install Android release APK (Android 10 `minSdkVersion 29` to Android 17 `targetSdkVersion 37`) signed with the official **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)** release certificate.
+  - `CalyxEncryptedMessenger.aab` — Google Play Console Android App Bundle.
+  - `android_project_source/` — Complete Android application source code (`AndroidManifest.xml`, `MainActivity.java`, `build.gradle`, and Neon Blue/Black UI assets).
+* **`Backend Files/messenger_server/`**:
+  - `calyx_qpep.py` — Pure-Python reference implementation of **[OpenQPEP](https://github.com/CalyxLabsInc/OpenQPEP/)** (`Beta Version 0.1.6`).
+  - `server.py` — Multi-threaded Python 3 + SQLite WAL real-time relay, 64-character Key Hash directory server, and browser web client host (default port `8446`, routed to `https://messenger.calyxlabsinc.org`).
+  - `static/index.html` — Full browser web application mirroring the Android client so users can create or import `.qpkrf` accounts on the web.
+  - `cli.py` & `test_messenger.py` — Command-line client and automated `unittest` verification suite.
+  - `install_service.sh` & `systemd/calyx-messenger.service` — One-command Ubuntu Server `systemd` deployment scripts.
 
 ## 6. Quick Start & Backend Deployment
 
-### Download & Install Calyx Encrypted Messenger
+### Run the Automated Verification Suite
 
 ```bash
-Download CalyxEncryptedMessenger.apk directly from this repository or in the releases section of this repository.
+cd "Backend Files/messenger_server"
+python3 test_messenger.py
+```
+
+### Deploy `messenger_server` on Ubuntu Server (Port `8446`)
+
+```bash
+cd "Backend Files/messenger_server"
+./install_service.sh
 ```
 
 ## 7. Official OpenQPEP & Calyx Labs Inc. Links
 
 * **Live Web Messenger & Key Hash Directory:** [https://messenger.calyxlabsinc.org](https://messenger.calyxlabsinc.org)
 * **OpenQPEP Protocol Specification & SDK:** [https://github.com/CalyxLabsInc/OpenQPEP/](https://github.com/CalyxLabsInc/OpenQPEP/)
-* **Calyx QPEP Client (Android Cryptographic Suite):** [https://github.com/CalyxLabsInc/CalyxQPEP-Client](https://www.google.com/search?q=https://github.com/CalyxLabsInc/CalyxQPEP-Client)
+* **Calyx QPEP Client (Android Cryptographic Suite):** [https://github.com/CalyxLabsInc/CalyxQPEP-Client](https://github.com/CalyxLabsInc/CalyxQPEP-Client)
 * **OpenQPEP Public Key Server:** [https://qpepkeys.calyxlabsinc.org](https://qpepkeys.calyxlabsinc.org)
 * **Calyx Labs Inc. Official Website:** [https://calyxlabsinc.org](https://calyxlabsinc.org) | [https://calyxlabsinc.github.io/](https://calyxlabsinc.github.io/)
-* **Terms of Service:** [https://calyxlabsinc.org/CalyxQPEM\_TermsOfService.txt](https://www.google.com/search?q=https://calyxlabsinc.org/CalyxQPEM_TermsOfService.txt)
+* **Terms of Service:** [https://calyxlabsinc.org/CalyxQPEM_TermsOfService.txt](https://calyxlabsinc.org/CalyxQPEM_TermsOfService.txt)
 * **Privacy Policy:** [https://calyxlabsinc.org/google_play_privacy_policy.txt](https://calyxlabsinc.org/google_play_privacy_policy.txt)
 
 ## 8. License
 
 Licensed under the **Calyx Public Open Source License 1.0 (`CPOSL-1.0`)**.  
-Copyright © 2026 **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)** — Created, Designed & Engineered by **Tristen Martinez** (`support@calyxlabsinc.org`).
-
+Copyright © 2026 **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)** — Created, Designed & Engineered by **Tristen Martinez** (`support@calyxlabsinc.org` | `calyxlabsinc@gmail.com`).
