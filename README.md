@@ -107,5 +107,5 @@ cd "Backend Files/messenger_server"
 
 ## 8. License
 
-Licensed under the **Calyx Public Open Source License 1.0 (`CPOSL-1.0`)**.  
+Licensed under the **Calyx Public Open Source License 1.0 (`CPOSLS-1.0`)**.  
 Copyright © 2026 **[Calyx Labs Inc.](https://calyxlabsinc.github.io/)** — Created, Designed & Engineered by **Tristen Martinez** (`support@calyxlabsinc.org` | `calyxlabsinc@gmail.com`).
